@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Source',  'Tweets'],
+
+                ['Android users', 5587],
+                ['iPhone users', 12941],
+                ['IFTTT users', 1673],
+                ['RoundTeam users', 44],
+                ['twitterfeed users', 1866],
+                ['Web users', 9504],
+                ['iPad users', 815],
+                ['Instagram users', 1272],
+                ['TweetDeck users', 2315],
+                ['Hootsuite users', 764],
+                ['Facebook users', 927],
+                ['Paper.li users', 49],
+                ['Vine - Make a Scene users', 26],
+                ['Sports Teller users', 2],
+            ]);
+
+            var options = {
+                title: 'Highly used source',
+                vAxis: {title: 'Tweets Count '},
+                isStacked: true
+            };
+
+            var chart = new google.visualization.SteppedAreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+<div id="chart_div" style="width: 1500px; height: 500px;"></div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+
+              ['Name', 'User Name'],
+
+                ['One Direction',81459],
+                ['Ashok Bajjoan',30597],
+                ['Ashok Bajjoan',26979],
+                ['jake',22923],
+                ['JJ Morgan',22922],
+                ['֓',20245],
+                ['宮上司',19872],
+                ['TG',19871],
+                ['プンプン',19870],
+                ['@kazu85',19869],
+                ['Mammy',19868],
+                ['しげ',19867],
+                ['あゆ@ガルパンはいいぞ',19867],
+                ['りょう',19866],
+                ['Kenken',19866],
+                ['れいこ',19866],
+                ['Logan Iafrate',18444],
+                ['Jen',18443],
+                ['Kƴ',18442],
+                ['Cassidy',18441],
+
+            ]);
+
+
+            var options = {
+                title: 'Retweet_Count',
+                vAxis: {title: 'Tweets Count '},
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+    <title>Query 1</title>
+
+</head>
+<style>
+
+    .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+    }
+
+    .arc path {
+        stroke: #fff;
+    }
+
+      .body{
+        background-image:url("../sports-fit-background-running-assessment.jpg");
+      }
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+    var width = 1200,
+            height = 500,
+            radius = Math.min(width, height) / 2;
+
+    var color = d3.scale.ordinal()
+            .range(["#98abc5", "#FF00FF", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00","#008000","#FFFF00","00FFFF"]);
+
+    var arc = d3.svg.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(radius - 70);
+
+    var pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) { return d.cnt; });
+
+    var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    d3.csv("query1.csv", type, function(error, data) {
+        if (error) throw error;
+
+        var g = svg.selectAll(".arc")
+                .data(pie(data))
+                .enter().append("g")
+                .attr("class", "arc");
+
+        g.append("path")
+                .attr("d", arc)
+                .style("fill", function(d) { return color(d.data.name); });
+
+        g.append("text")
+                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                .attr("dy", ".35em")
+                .text(function(d) { return d.data.name; });
+        /*g.append("text")
+                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                .attr("dy", ".195em")
+                .text(function(d) { return d.data.cnt; });*/
+    });
+
+    function type(d) {
+        d.cnt = +d.cnt;
+        return d;
+    }
+
+</script>
+<div align="center">
+<h1>Popular person followed based on the retweet count</h1>
+</div>
+</body>
+
+</html>

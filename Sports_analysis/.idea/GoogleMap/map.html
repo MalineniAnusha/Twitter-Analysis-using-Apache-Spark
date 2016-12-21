@@ -1,0 +1,84 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+         google.charts.load('current', {'packages':['geochart']});
+         google.charts.setOnLoadCallback(drawRegionsMap);
+
+
+function requestCSV(f,c){return new CSVAJAX(f,c);};
+function CSVAJAX(filepath,callback)
+{
+    this.request = new XMLHttpRequest();
+    this.request.timeout = 10000;
+    this.request.open("GET", filepath, true);
+    this.request.parent = this;
+    this.callback = callback;
+    this.request.onload = function()
+    {
+        var d = this.response.split('\n'); /*1st separator*/
+        var i = d.length;
+        var j = 0;
+        var res = [];
+        var t;
+        while(j<i)
+        {
+            var k = 0;
+
+            if(d[j] !== ""){
+                t = d[j].split(','); /*2nd separator*/
+                res.push([t[k], t[k+1]]);
+             }
+            else
+                d.splice(i,1);
+
+            j++;
+        }
+
+        this.parent.response = res;
+        var data = google.visualization.arrayToDataTable(res);
+        var options = {};
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);
+        if(typeof this.parent.callback != "undefined")
+         {
+            window.alert(res);
+            this.parent.callback(res);
+         }
+    };
+    this.request.send();
+}
+            function drawRegionsMap() {
+                var dataArray = requestCSV("map.csv");
+                /*dataArray = [['US','22'],['US','22']];*/
+
+                var data1 = google.visualization.arrayToDataTable([
+                ['COUNTRY', 'COUNT'],
+                ['US','269'],
+                ['CA','11'],
+                ['AU','6'],
+                ['GB','3'],
+                ['MX','2'],
+                ['BR','2'],
+                ['IE','2'],
+                ['JP','2'],
+                 ['TR','1'],
+                ['NZ','1'],
+
+            ]);
+
+           /* var options = {};
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);*/
+        }
+    </script>
+</head>
+<body>
+<div id="regions_div" style="width: 600px; height: 500px;"></div>
+</body>
+</html>
